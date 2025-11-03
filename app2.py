@@ -25,13 +25,13 @@ div[data-testid="stForm"] {
 .result-line{
   padding:12px 16px;border-radius:12px;
   background:#0b2536;color:#d8f1ff;border:1px solid #15394f;
-  font-size:1.05rem;font-weight:600;margin-top:.0rem;
+  font-size:1.25rem;font-weight:600;margin-top:.0rem;
 }
 .seat-line{
   margin-top:10px;
   padding:10px 14px;border-radius:10px;
   background:#132b3a;color:#e6f4ff;border:1px solid #1a3a4e;
-  font-size:1.05rem;font-weight:700;
+  font-size:1.25rem;font-weight:700;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -396,6 +396,7 @@ if submit_button:
                     st.image(up, use_column_width=True)
                 else:
                     st.info("앱 폴더에 `seatmap.png`를 추가하거나 위에서 이미지를 업로드하면 전체 좌석표가 표시됩니다.")
+
 
 
 
