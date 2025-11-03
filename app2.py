@@ -400,7 +400,8 @@ if submit_button:
 
             extra_img_path = "hall.png"
             if os.path.exists(extra_img_path):
-            st.image(extra_img_path, use_column_width=True)
+                st.image(extra_img_path, use_column_width=True)
+
 
 
 
