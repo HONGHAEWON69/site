@@ -25,7 +25,7 @@ div[data-testid="stForm"] {
 .result-line{
   padding:12px 16px;border-radius:12px;
   background:#0b2536;color:#d8f1ff;border:1px solid #15394f;
-  font-size:1.05rem;font-weight:600;margin-top:.2rem;
+  font-size:1.05rem;font-weight:600;margin-top:.0rem;
 }
 .seat-line{
   margin-top:10px;
@@ -396,6 +396,7 @@ if submit_button:
                     st.image(up, use_column_width=True)
                 else:
                     st.info("앱 폴더에 `seatmap.png`를 추가하거나 위에서 이미지를 업로드하면 전체 좌석표가 표시됩니다.")
+
 
 
 
