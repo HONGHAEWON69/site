@@ -321,7 +321,7 @@ with st.form(key="search_form"):
     birth_input = st.text_input("생년월일 (6자리)", placeholder="예: 980101", max_chars=6)
     # ✅ 과정 선택을 생년월일 아래로 배치
     course_input = st.radio("과정", ("석사과정", "박사과정"), horizontal=True)
-    submit_button = st.form_submit_button("내 자리 찾기")
+    submit_button = st.form_submit_button("🔎 내 자리 찾기")
 
 # -----------------------------
 # 검색 & 결과 표시
@@ -365,3 +365,4 @@ if submit_button:
                     st.image(up, use_column_width=True)
                 else:
                     st.info("앱 폴더에 `seatmap.png`를 추가하거나 위에서 이미지를 업로드하면 전체 좌석표가 표시됩니다.")
+
