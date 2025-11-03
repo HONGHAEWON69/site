@@ -398,6 +398,12 @@ if submit_button:
                     st.info("앱 폴더에 `seatmap.png`를 추가하거나 위에서 이미지를 업로드하면 전체 좌석표가 표시됩니다.")
 
 
+            extra_img_path = "hall.png"
+            if os.path.exists(extra_img_path):
+            st.image(extra_img_path, use_column_width=True)
+
+
+
 
 
 
