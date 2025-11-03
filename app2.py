@@ -6,30 +6,49 @@ import pandas as pd
 # -----------------------------
 # 페이지 설정
 # -----------------------------
-st.set_page_config(page_title="25년 2학기 AI서울테크 대학원 장학금 증서수여식 자리안내", page_icon="💺", layout="wide")
-
+st.set_page_config(
+    page_title="25년 2학기 AI서울테크 대학원 장학금 증서수여식 자리안내",
+    page_icon="💺",
+    layout="wide"
+)
 
 # -----------------------------
 # 스타일
 # -----------------------------
 st.markdown("""
 <style>
+/* 결과 라인 (소속) */
 .result-line{
   padding:12px 16px;border-radius:12px;
   background:#0b2536;color:#d8f1ff;border:1px solid #15394f;
   font-size:1.05rem;font-weight:600;margin-top:.8rem;
 }
+/* 결과 라인 (좌석 텍스트) */
 .seat-line{
   margin-top:10px;
   padding:10px 14px;border-radius:10px;
   background:#132b3a;color:#e6f4ff;border:1px solid #1a3a4e;
   font-size:1.05rem;font-weight:700;
 }
+/* ✅ 입력 폼을 감싸는 큰 박스 (연한 네이비) */
+.form-container{
+  background:#E7ECF7;            /* 연한 네이비 톤 */
+  border:1px solid #CAD6EC;
+  border-radius:12px;
+  padding:24px 20px;
+  margin:14px 0 24px 0;
+}
+/* 폼 안쪽 요소 간격 살짝 조정 */
+.form-container .stTextInput, 
+.form-container .stRadio, 
+.form-container .stButton{
+  margin-top:6px;
+}
 </style>
 """, unsafe_allow_html=True)
 
 # -----------------------------
-# 학생 데이터 (여기에 네 리스트 전체 붙여넣기)
+# 학생 데이터 (기존 리스트 그대로 사용)
 # -----------------------------
 student_data_list = [
     { "이름": "안소정", "과정명": "박사과정", "생년월일": "950926", "학교": "고려대학교 대학원", "자리": "TA-1" },
@@ -308,11 +327,21 @@ student_data_list = [
     { "이름": "배진성", "과정명": "석사과정", "생년월일": "000217", "학교": "한양대학교 대학원", "자리": "G-22" },
     { "이름": "최준서", "과정명": "석사과정", "생년월일": "010126", "학교": "세종대학교 일반대학원", "자리": "G-23" }
 ]
+# (아래 두 줄만 꼭 있어야 함)
+from typing import List, Dict
+# student_data_list 변수가 이미 정의되어 있다고 가정
+# 만약 이 파일만 새로 쓰는 거면, 기존에 쓰던 긴 리스트를 여기에 붙여넣으세요.
+
+# 데모 방어용: 이미 변수 있으면 재정의 안 함
+if 'student_data_list' not in globals():
+    student_data_list: List[Dict] = []  # (없다면 빈 리스트로)
+
 df = pd.DataFrame(student_data_list)
-df["생년월일"] = df["생년월일"].astype(str)
+if not df.empty:
+    df["생년월일"] = df["생년월일"].astype(str)
 
 # -----------------------------
-# UI
+# 헤더
 # -----------------------------
 st.markdown("""
 <div style="
@@ -323,9 +352,9 @@ st.markdown("""
     color:#FFFFFF;
     font-weight:700;
     font-size:1.35rem;
-    margin-bottom:16px;
+    margin-bottom:12px;
 ">
-    🎓25-2학기 AI서울테크 증서수여식🎓<br>
+    🎓 25-2학기 AI서울테크 증서수여식 🎓<br>
     <span style="font-size:1.05rem; font-weight:500;">
         💺 장학생 자리배치 안내
     </span>
@@ -333,30 +362,16 @@ st.markdown("""
 """, unsafe_allow_html=True)
 st.caption("이름, 생년월일(6자리), 과정을 선택 후 버튼을 눌러주세요.")
 
-
-st.markdown("""
-<style>
-.form-container {
-    background-color: #E7ECF7;   /* ✅ 연한 네이비 */
-    padding: 28px;
-    border-radius: 12px;
-    border: 1px solid #CAD6EC;
-    margin: 20px 0px 30px 0px;
-}
-</style>
-""", unsafe_allow_html=True)
-
+# -----------------------------
+# 입력 폼 (✅ 연한 네이비 큰 박스로 감싸기)
+# -----------------------------
 st.markdown('<div class="form-container">', unsafe_allow_html=True)
-
-
 
 with st.form(key="search_form"):
     name_input  = st.text_input("이름", placeholder="예: 홍길동")
     birth_input = st.text_input("생년월일 (6자리)", placeholder="예: 980101", max_chars=6)
-    # ✅ 과정 선택을 생년월일 아래로 배치
     course_input = st.radio("과정", ("석사과정", "박사과정"), horizontal=True)
     submit_button = st.form_submit_button("🔎 내 자리 찾기")
-
 
 st.markdown('</div>', unsafe_allow_html=True)
 
@@ -368,6 +383,8 @@ if submit_button:
         st.warning("이름과 생년월일을 모두 입력해주세요.")
     elif len(birth_input) != 6 or not birth_input.isdigit():
         st.warning("생년월일 6자리(YYMMDD)를 숫자로 정확히 입력해주세요.")
+    elif df.empty:
+        st.error("학생 데이터가 비어 있습니다. student_data_list를 확인해주세요.")
     else:
         result = df[
             (df["이름"] == name_input.strip()) &
@@ -384,18 +401,21 @@ if submit_button:
             seat   = row["자리"]
 
             # 소속 한 줄 안내
-            st.markdown(f'<div class="result-line">🏫 {name} 님의 소속 : {school}</div>',
-                        unsafe_allow_html=True)
-
-            # ✅ 좌석은 텍스트로만
-            st.markdown(f'<div class="seat-line">💺 배정된 좌석 : <b>{seat}</b></div>',
-                        unsafe_allow_html=True)
+            st.markdown(
+                f'<div class="result-line">🏫 {name} 님의 소속 : {school}</div>',
+                unsafe_allow_html=True
+            )
+            # 좌석 텍스트
+            st.markdown(
+                f'<div class="seat-line">💺 배정된 좌석 : <b>{seat}</b></div>',
+                unsafe_allow_html=True
+            )
 
             # 전체 좌석표
             st.markdown(
-    "<h4 style='margin-top:28px; font-size:20px; font-weight:700;'>📌 전체 좌석표</h4>",
-    unsafe_allow_html=True
-)
+                "<h4 style='margin-top:28px; font-size:20px; font-weight:700;'>📌 전체 좌석표</h4>",
+                unsafe_allow_html=True
+            )
             default_map_path = "seatmap.png"  # 같은 폴더에 넣어두면 자동 표시
             if os.path.exists(default_map_path):
                 st.image(default_map_path, use_column_width=True)
@@ -405,23 +425,3 @@ if submit_button:
                     st.image(up, use_column_width=True)
                 else:
                     st.info("앱 폴더에 `seatmap.png`를 추가하거나 위에서 이미지를 업로드하면 전체 좌석표가 표시됩니다.")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
