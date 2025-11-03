@@ -8,6 +8,15 @@ import pandas as pd
 # -----------------------------
 st.set_page_config(page_title="25년 2학기 AI서울테크 대학원 장학금 증서수여식 자리안내", page_icon="💺", layout="wide")
 
+st.markdown("""
+<style>
+/* 전체 배경색 */
+.stApp {
+    background-color: #e8eef7;   /* 연한 네이비 톤 (회색+블루 느낌) */
+}
+</style>
+""", unsafe_allow_html=True)
+
 # -----------------------------
 # 스타일
 # -----------------------------
@@ -384,6 +393,7 @@ if submit_button:
                     st.image(up, use_column_width=True)
                 else:
                     st.info("앱 폴더에 `seatmap.png`를 추가하거나 위에서 이미지를 업로드하면 전체 좌석표가 표시됩니다.")
+
 
 
 
