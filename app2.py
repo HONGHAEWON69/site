@@ -313,7 +313,7 @@ df["생년월일"] = df["생년월일"].astype(str)
 # -----------------------------
 # UI
 # -----------------------------
-st.markdown("<h1 style='margin-top:-14px;'>🎓 AI서울테크 증서수여식 🎓</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='margin-top:-12px;'>🎓 AI서울테크 증서수여식 🎓</h1>", unsafe_allow_html=True)
 st.markdown("<h3 style='margin-top:-12px;'>💺 장학생 자리배치 안내</h3>", unsafe_allow_html=True)
 st.caption("이름, 생년월일(6자리), 과정을 선택 후 버튼을 눌러주세요.")
 
@@ -369,6 +369,7 @@ if submit_button:
                     st.image(up, use_column_width=True)
                 else:
                     st.info("앱 폴더에 `seatmap.png`를 추가하거나 위에서 이미지를 업로드하면 전체 좌석표가 표시됩니다.")
+
 
 
 
