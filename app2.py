@@ -1,45 +1,45 @@
-# app.py
 import os
 import streamlit as st
 import pandas as pd
+import streamlit.components.v1 as components   # ✅ SVG 렌더링용
 
 # -----------------------------
-# 기본 설정
+# 페이지 설정
 # -----------------------------
-st.set_page_config(page_title="자리배치 안내", page_icon="💺", layout="wide")
+st.set_page_config(
+    page_title="자리배치 안내",
+    page_icon="💺",
+    layout="wide"
+)
 
 # -----------------------------
-# 스타일
+# CSS
 # -----------------------------
 st.markdown("""
 <style>
-/* 페이지 여백 */
-.block-container { padding-top: 2rem; padding-bottom: 2rem; }
-
-/* 결과 한 줄 배너 */
 .result-line{
   padding:12px 16px;border-radius:12px;
   background:#0b2536;color:#d8f1ff;border:1px solid #15394f;
-  font-size:1.05rem;font-weight:600;margin-top:.5rem;
+  font-size:1.05rem;font-weight:600;margin-top:.8rem;
 }
 
-/* 의자 뱃지 */
-.seat-wrap{display:flex;justify-content:center;align-items:center;margin:18px 0 8px 0;}
-.seat-svg{width:260px;height:auto;}
-
-/* 업로더 박스 안내 텍스트 작게 */
-.small-note {font-size:0.9rem; color:#9aa9b5;}
+.seat-wrap{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  margin:18px 0 8px 0;
+}
+.seat-svg{
+  width:240px;
+  height:auto;
+}
 </style>
 """, unsafe_allow_html=True)
 
-# -----------------------------
-# 데이터 (여기에 네 기존 리스트를 붙여넣기!)
-# -----------------------------
-# ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-# student_data_list = [...]  # 네가 갖고 있는 전체 리스트 그대로 붙여 넣기
-# ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 
-# 데모용(실행 확인용) 소수만 예시로 넣어둠 — 실제 사용 시 위 리스트로 교체!
+# -----------------------------
+# 학생 데이터
+# -----------------------------
 student_data_list = [
     { "이름": "안소정", "과정명": "박사과정", "생년월일": "950926", "학교": "고려대학교 대학원", "자리": "TA-1" },
     { "이름": "허재혁", "과정명": "박사과정", "생년월일": "940223", "학교": "서울대학교 대학원", "자리": "TA-2" },
@@ -317,37 +317,34 @@ student_data_list = [
     { "이름": "배진성", "과정명": "석사과정", "생년월일": "000217", "학교": "한양대학교 대학원", "자리": "G-22" },
     { "이름": "최준서", "과정명": "석사과정", "생년월일": "010126", "학교": "세종대학교 일반대학원", "자리": "G-23" }
 ]
-
-# -----------------------------
-# 데이터프레임 변환
-# -----------------------------
 df = pd.DataFrame(student_data_list)
-if "생년월일" in df.columns:
-    df["생년월일"] = df["생년월일"].astype(str)
+df["생년월일"] = df["생년월일"].astype(str)
+
 
 # -----------------------------
 # UI
 # -----------------------------
 st.title("💺 자리배치 안내")
-st.caption("이름, 생년월일(6자리), 과정을 선택 후 버튼을 눌러주세요.")
+st.caption("이름·생년월일·과정을 입력하세요.")
 
 with st.form(key="search_form"):
-    left, right = st.columns([1,1])
-    with left:
-        name_input  = st.text_input("이름", placeholder="예: 홍길동")
-        birth_input = st.text_input("생년월일 (6자리)", placeholder="예: 980101", max_chars=6)
-    with right:
-        course_input = st.radio("과정", ("석사과정", "박사과정"), horizontal=True)
+    name_input  = st.text_input("이름", placeholder="예: 홍길동")
+    birth_input = st.text_input("생년월일 (6자리)", placeholder="예: 980101", max_chars=6)
+
+    # ✅ 생년월일 아래로 위치 이동
+    course_input = st.radio("과정", ("석사과정", "박사과정"), horizontal=True)
+
     submit_button = st.form_submit_button("내 자리 찾기")
 
+
 # -----------------------------
-# 검색 & 결과 표시
+# 검색 & 표시
 # -----------------------------
 if submit_button:
     if not name_input or not birth_input:
         st.warning("이름과 생년월일을 모두 입력해주세요.")
     elif len(birth_input) != 6 or not birth_input.isdigit():
-        st.warning("생년월일 6자리(YYMMDD)를 숫자로 정확히 입력해주세요.")
+        st.warning("생년월일 6자리(YYMMDD)를 정확히 입력해주세요.")
     else:
         result = df[
             (df["이름"] == name_input.strip()) &
@@ -356,61 +353,62 @@ if submit_button:
         ]
 
         if result.empty:
-            st.error("일치하는 정보를 찾을 수 없습니다. 이름, 생년월일, 과정을 다시 확인해주세요.")
+            st.error("일치하는 정보를 찾을 수 없습니다.")
         else:
             row = result.iloc[0]
-            name   = row.get("이름", "")
-            school = row.get("학교", "")
-            seat   = row.get("자리", "")
+            name   = row["이름"]
+            school = row["학교"]
+            seat   = row["자리"]
 
-            # 1) 요청한 한 줄 문구
+            # ✅ 1) 소속 한 줄 표시
             st.markdown(
                 f'<div class="result-line">{name} 님의 소속 : {school}</div>',
                 unsafe_allow_html=True
             )
 
-            # 2) 의자 모양 배지 (의자 안에 좌석 텍스트 표시)
+            # ✅ 2) SVG 의자 표시
             svg = f"""
-            <div class="seat-wrap">
-              <svg class="seat-svg" viewBox="0 0 220 240" xmlns="http://www.w3.org/2000/svg" aria-label="seat-badge">
-                <defs>
-                  <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-                    <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#00000055"/>
-                  </filter>
-                  <linearGradient id="grad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%"  stop-color="#6366F1"/>
-                    <stop offset="100%" stop-color="#4338CA"/>
-                  </linearGradient>
-                </defs>
+<div class="seat-wrap">
+<svg class="seat-svg" viewBox="0 0 220 240" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#00000055"/>
+    </filter>
+    <linearGradient id="grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#6366F1"/>
+      <stop offset="100%" stop-color="#4338CA"/>
+    </linearGradient>
+  </defs>
 
-                <g filter="url(#shadow)">
-                  <!-- 등받이 -->
-                  <rect x="55" y="24" rx="18" ry="18" width="110" height="90" fill="url(#grad)"/>
-                  <!-- 좌판 -->
-                  <rect x="40" y="116" rx="12" ry="12" width="140" height="26" fill="#1f2937"/>
-                  <!-- 다리 -->
-                  <rect x="60"  y="146" rx="10" ry="10" width="32" height="70" fill="#334155"/>
-                  <rect x="128" y="146" rx="10" ry="10" width="32" height="70" fill="#334155"/>
-                </g>
+  <g filter="url(#shadow)">
+    <rect x="55" y="24"  rx="18" ry="18" width="110" height="90" fill="url(#grad)"/>
+    <rect x="40" y="116" rx="12" ry="12" width="140" height="26" fill="#1f2937"/>
+    <rect x="60"  y="146" rx="10" ry="10" width="32" height="70" fill="#334155"/>
+    <rect x="128" y="146" rx="10" ry="10" width="32" height="70" fill="#334155"/>
+  </g>
 
-                <!-- 좌석 텍스트 -->
-                <text x="110" y="78" text-anchor="middle"
-                  font-family="Pretendard, 'Noto Sans KR', sans-serif"
-                  font-size="28" fill="#ffffff" font-weight="800">{seat}</text>
-              </svg>
-            </div>
-            """
-            # ✅ SVG를 실제로 렌더링
-            st.markdown(svg, unsafe_allow_html=True)
+  <!-- ✅ 좌석 텍스트 -->
+  <text x="110" y="78" text-anchor="middle"
+        font-family="Pretendard, 'Noto Sans KR', sans-serif"
+        font-size="28" fill="#ffffff" font-weight="800">{seat}</text>
+</svg>
+</div>
+"""
 
-            # 3) 전체 좌석표 이미지
+            # ✅ markdown → X
+            # ✅ components.html → O
+            components.html(svg, height=260, scrolling=False)
+
+
+            # ✅ 3) 전체 좌석표
             st.subheader("전체 좌석표")
-            default_map_path = "seatmap.png"  # 레포 루트에 파일명을 seatmap.png로 두면 자동 표시
+            default_map_path = "seatmap.png"
+
             if os.path.exists(default_map_path):
                 st.image(default_map_path, use_column_width=True)
             else:
-                up = st.file_uploader("좌석표 이미지를 업로드하세요 (PNG/JPG)", type=["png", "jpg", "jpeg"])
-                if up is not None:
-                    st.image(up, use_column_width=True)
+                uploaded = st.file_uploader("좌석표 이미지를 업로드하세요 (PNG/JPG)")
+                if uploaded:
+                    st.image(uploaded, use_column_width=True)
                 else:
-                    st.markdown('<p class="small-note">레포에 <code>seatmap.png</code>를 추가하거나 위에서 이미지를 업로드하면 전체 좌석표가 표시됩니다.</p>', unsafe_allow_html=True)
+                    st.info("레포에 seatmap.png를 두면 자동 표시됩니다.")
