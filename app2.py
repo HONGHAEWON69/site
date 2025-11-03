@@ -313,9 +313,23 @@ df["생년월일"] = df["생년월일"].astype(str)
 # -----------------------------
 # UI
 # -----------------------------
-st.markdown("<h2 style='margin-top:-12px;'>🎓 AI서울테크 증서수여식 🎓</h1>", unsafe_allow_html=True)
-st.markdown("<h3 style='margin-top:-12px;'>💺 장학생 자리배치 안내</h3>", unsafe_allow_html=True)
-st.caption("이름, 생년월일(6자리), 과정을 선택 후 버튼을 눌러주세요.")
+st.markdown("""
+<div style="
+    background: linear-gradient(90deg, #4F46E5, #6366F1);
+    padding: 22px 16px;
+    border-radius: 14px;
+    text-align: center;
+    color: white;
+    font-weight: 700;
+    font-size: 1.4rem;
+    margin-bottom: 16px;
+">
+    🎓 25년 2학기 AI서울테크 증서 수여식 🎓 <br>
+    <span style="font-size:1.05rem; font-weight:500;">
+        💺 장학생 자리배치 안내
+    </span>
+</div>
+""", unsafe_allow_html=True)
 
 with st.form(key="search_form"):
     name_input  = st.text_input("이름", placeholder="예: 홍길동")
@@ -369,6 +383,7 @@ if submit_button:
                     st.image(up, use_column_width=True)
                 else:
                     st.info("앱 폴더에 `seatmap.png`를 추가하거나 위에서 이미지를 업로드하면 전체 좌석표가 표시됩니다.")
+
 
 
 
