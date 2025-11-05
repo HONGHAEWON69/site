@@ -387,7 +387,7 @@ if submit_button:
     "<h4 style='margin-top:28px; font-size:20px; font-weight:700;'>📌 전체 좌석표</h4>",
     unsafe_allow_html=True
 )
-            default_map_path = "seatmap.png"  # 같은 폴더에 넣어두면 자동 표시
+            default_map_path = "AI증서수여식 다목적홀 도면도.png"  # 같은 폴더에 넣어두면 자동 표시
             if os.path.exists(default_map_path):
                 st.image(default_map_path, use_column_width=True)
             else:
@@ -395,7 +395,8 @@ if submit_button:
                 if up is not None:
                     st.image(up, use_column_width=True)
                 else:
-                    st.info("앱 폴더에 `seatmap.png`를 추가하거나 위에서 이미지를 업로드하면 전체 좌석표가 표시됩니다.")
+                    st.info("앱 폴더에 `AI증서수여식 다목적홀 도면도.png`를 추가하거나 위에서 이미지를 업로드하면 전체 좌석표가 표시됩니다.")
+
 
 
 
