@@ -16,8 +16,8 @@ div[data-testid="stForm"] {
     background: #E7ECF7 !important;
     border: 1px solid #CAD6EC;
     border-radius: 12px;
-    padding: 24px 20px;
-    margin: 6px 0 24px 0;
+    padding: 12px 16px;
+    margin: 6px 0 12px 0;
 }
 
 .result-line{
@@ -370,5 +370,6 @@ if submit_button:
             elif course_input == "석사과정":
                 # 석사과정에 해당하는 이미지
                 st.image("2F_seats.png", caption="석사과정 자리배치")
+
 
 
