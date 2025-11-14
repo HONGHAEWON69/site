@@ -218,7 +218,7 @@ student_data_list = [
     {"name": "이효준", "course": "석사", "dob": "990507", "seat": "D-12"},
     {"name": "임건호", "course": "석사", "dob": "981107", "seat": "D-13"},
     {"name": "임지인", "course": "석사", "dob": "011022", "seat": "D-14"},
-    {"name":Z: "장유림", "course": "석사", "dob": "000812", "seat": "D-15"},
+    {"name": "장유림", "course": "석사", "dob": "000812", "seat": "D-15"},
     {"name": "장진우", "course": "석사", "dob": "000710", "seat": "D-16"},
     {"name": "장하나", "course": "석사", "dob": "001004", "seat": "D-17"},
     {"name": "전민서", "course": "석사", "dob": "000103", "seat": "D-18"},
@@ -377,3 +377,4 @@ if submit_button:
                     st.image(up, use_column_width=True)
                 else:
                     st.info("앱 폴더에 `AI증서수여식 다목적홀 도면도.png`를 추가하거나 위에서 이미지를 업로드하면 전체 좌석표가 표시됩니다.")
+
