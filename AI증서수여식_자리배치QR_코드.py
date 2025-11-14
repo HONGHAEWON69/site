@@ -44,7 +44,7 @@ h4 {
 }
 
 .seat-value {
-  font-size: 2.0rem;  /* "TA-1" 크기는 그대로 유지 */
+  font-size: 2.2rem;  /* "TA-1" 크기는 그대로 유지 */
   font-weight: bold;
 }
 </style>
@@ -388,6 +388,7 @@ if submit_button:
             elif course_input == "석사과정":
                 # 석사과정에 해당하는 이미지
                 st.image("2F_seats.png", caption="석사과정 장학생은 2층에서 착석해 주시기 바랍니다.")
+
 
 
 
