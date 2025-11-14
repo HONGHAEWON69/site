@@ -384,10 +384,11 @@ if submit_button:
             # 과정에 따른 이미지 출력
             if course_input == "박사과정":
                 # 박사과정에 해당하는 이미지
-                st.image("1F_seats.png", caption="박사과정 자리배치")
+                st.image("1F_seats.png", caption=""박사과정 장학생은 1층에서 착석해 주시기 바랍니다."")
             elif course_input == "석사과정":
                 # 석사과정에 해당하는 이미지
-                st.image("2F_seats.png", caption="석사과정 자리배치")
+                st.image("2F_seats.png", caption=""석사과정 장학생은 2층에서 착석해 주시기 바랍니다."")
+
 
 
 
