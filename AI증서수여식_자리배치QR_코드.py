@@ -310,7 +310,7 @@ student_data_list = [
     {"name": "정윤아", "course": "석사", "dob": "001024", "seat": "G-6"},
     {"name": "정태성", "course": "석사", "dob": "990320", "seat": "G-7"},
     {"name": "조대호", "course": "석사", "dob": "990527", "seat": "G-8"},
-    {"name": "채영재", "course": "석사", "dob": "250224", "seat": "G-9"},
+    {"name": "채영재", "course": "석사", "dob": "000224", "seat": "G-9"},
     {"name": "최영", "course": "석사", "dob": "000714", "seat": "G-10"},
     {"name": "전동윤", "course": "석사", "dob": "980828", "seat": "G-11"},
     {"name": "이원정", "course": "석사", "dob": "990507", "seat": "G-12"},
@@ -388,6 +388,7 @@ if submit_button:
             elif course_input == "석사과정":
                 # 석사과정에 해당하는 이미지
                 st.image("2F_seats.png", caption="석사과정 장학생은 2층에서 착석해 주시기 바랍니다.")
+
 
 
 
