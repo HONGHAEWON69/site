@@ -87,36 +87,6 @@ student_data_list = [
     {"name": "우승정", "course": "박사", "dob": "730710", "seat": "TA-7"},
     {"name": "유승욱", "course": "박사", "dob": "000128", "seat": "TA-7"},
     {"name": "윤예진", "course": "박사", "dob": "951016", "seat": "TA-7"},
-    {"name": "이동엽", "course": "박사", "dob": "990706", "seat": "TA-8"},
-    {"name": "이병원", "course": "박사", "dob": "960413", "seat": "TA-8"},
-    {"name": "이소현", "course": "박사", "dob": "980515", "seat": "TA-8"},
-    {"name": "이승민", "course": "박사", "dob": "010114", "seat": "TA-8"},
-    {"name": "이우준", "course": "박사", "dob": "980216", "seat": "TA-8"},
-    {"name": "이원석", "course": "박사", "dob": "981017", "seat": "TA-8"},
-    {"name": "이정연", "course": "박사", "dob": "980402", "seat": "TA-8"},
-    {"name": "이주호", "course": "박사", "dob": "001102", "seat": "TA-8"},
-    {"name": "이진민", "course": "박사", "dob": "010212", "seat": "TA-9"},
-    {"name": "이진호", "course": "박사", "dob": "940620", "seat": "TA-9"},
-    {"name": "이태영", "course": "박사", "dob": "990415", "seat": "TA-9"},
-    {"name": "이현정", "course": "박사", "dob": "750724", "seat": "TA-9"},
-    {"name": "이호성", "course": "박사", "dob": "990205", "seat": "TA-9"},
-    {"name": "장보아", "course": "박사", "dob": "970311", "seat": "TA-9"},
-    {"name": "장영동", "course": "박사", "dob": "961124", "seat": "TA-9"},
-    {"name": "장은비", "course": "박사", "dob": "010604", "seat": "TA-9"},
-    {"name": "정서우", "course": "박사", "dob": "000221", "seat": "TA-10"},
-    {"name": "정은희", "course": "박사", "dob": "991112", "seat": "TA-10"},
-    {"name": "정지완", "course": "박사", "dob": "940207", "seat": "TA-10"},
-    {"name": "조재은", "course": "박사", "dob": "001025", "seat": "TA-10"},
-    {"name": "최소윤", "course": "박사", "dob": "971119", "seat": "TA-10"},
-    {"name": "최인수", "course": "박사", "dob": "981029", "seat": "TA-10"},
-    {"name": "최지웅", "course": "박사", "dob": "001026", "seat": "TA-10"},
-    {"name": "추교빈", "course": "박사", "dob": "981216", "seat": "TA-10"},
-    {"name": "하승운", "course": "박사", "dob": "970109", "seat": "TA-11"},
-    {"name": "하지연", "course": "박사", "dob": "980913", "seat": "TA-11"},
-    {"name": "한지헌", "course": "박사", "dob": "991224", "seat": "TA-11"},
-    {"name": "허재혁", "course": "박사", "dob": "940223", "seat": "TA-11"},
-    {"name": "황동준", "course": "박사", "dob": "990427", "seat": "TA-11"},
-    {"name": "황인성", "course": "박사", "dob": "970725", "seat": "TA-11"},
 ]
 
 df = pd.DataFrame(student_data_list)
@@ -143,12 +113,9 @@ st.markdown("""
 """, unsafe_allow_html=True)
 st.caption("이름, 생년월일(6자리), 과정을 선택 후 버튼을 눌러주세요.")
 
-
-
 with st.form(key="search_form"):
     name_input  = st.text_input("이름", placeholder="예: 홍길동")
     dob_input = st.text_input("생년월일 (6자리)", placeholder="예: 980101", max_chars=6)
-    # ✅ 과정 선택을 생년월일 아래로 배치
     course_input = st.radio("과정", ("석사과정", "박사과정"), horizontal=True)
     submit_button = st.form_submit_button("🔎 내 자리 찾기")
 
@@ -175,7 +142,6 @@ if submit_button:
             name   = row["name"]
             seat   = row["seat"]
 
-            # ✅ 좌석은 텍스트로만
             st.markdown(f'<div class="seat-line">💺 배정된 좌석 : <b>{seat}</b></div>',
                         unsafe_allow_html=True)
 
