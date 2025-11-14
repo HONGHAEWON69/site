@@ -363,12 +363,20 @@ if submit_button:
 
             st.markdown(f'<div class="seat-line">💺 배정된 좌석 : <b>{seat}</b></div>', unsafe_allow_html=True)
 
+            # 과정에 따른 이미지 출력
+            if course_input == "박사과정":
+                # 박사과정에 해당하는 이미지
+                st.image("1층 좌석표.png", caption="박사과정 자리배치")
+            elif course_input == "석사과정":
+                # 석사과정에 해당하는 이미지
+                st.image("2층 좌석표.png", caption="석사과정 자리배치")
+
             # 전체 좌석표
             st.markdown(
                 "<h4 style='margin-top:28px; font-size:20px; font-weight:700;'>📌 전체 좌석표</h4>",
                 unsafe_allow_html=True
             )
-            default_map_path = "1층 좌석표.png"  # 같은 폴더에 넣어두면 자동 표시
+            default_map_path = "AI증서수여식 다목적홀 도면도.png"  # 같은 폴더에 넣어두면 자동 표시
             if os.path.exists(default_map_path):
                 st.image(default_map_path, use_column_width=True)
             else:
@@ -376,6 +384,6 @@ if submit_button:
                 if up is not None:
                     st.image(up, use_column_width=True)
                 else:
-                    st.info("앱 폴더에 `1층 좌석표.png`를 추가하거나 위에서 이미지를 업로드하면 전체 좌석표가 표시됩니다.")
+                    st.info("앱 폴더에 `AI증서수여식 다목적홀 도면도.png`를 추가하거나 위에서 이미지를 업로드하면 전체 좌석표가 표시됩니다.")
 
 
