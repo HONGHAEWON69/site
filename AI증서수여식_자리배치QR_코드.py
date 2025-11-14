@@ -333,7 +333,7 @@ st.caption("이름, 생년월일(6자리), 과정을 선택 후 버튼을 눌러
 
 with st.form(key="search_form"):
     name_input  = st.text_input("이름", placeholder="예: 홍길동")
-    birth_input = st.text_input("생년월일 (6자리)", placeholder="예: 980101", max_chars=6)
+    dob_input = st.text_input("생년월일 (6자리)", placeholder="예: 980101", max_chars=6)
     # ✅ 과정 선택을 생년월일 아래로 배치
     course_input = st.radio("과정", ("석사과정", "박사과정"), horizontal=True)
     submit_button = st.form_submit_button("🔎 내 자리 찾기")
@@ -343,14 +343,14 @@ with st.form(key="search_form"):
 # 검색 & 결과 표시
 # -----------------------------
 if submit_button:
-    if not name_input or not birth_input:
+    if not name_input or not dob_input:
         st.warning("이름과 생년월일을 모두 입력해주세요.")
-    elif len(birth_input) != 6 or not birth_input.isdigit():
+    elif len(dob_input) != 6 or not dob_input.isdigit():
         st.warning("생년월일 6자리(YYMMDD)를 숫자로 정확히 입력해주세요.")
     else:
         result = df[
             (df["이름"] == name_input.strip()) &
-            (df["생년월일"] == birth_input.strip()) &
+            (df["생년월일"] == dob_input.strip()) &
             (df["과정명"] == course_input)
         ]
 
@@ -359,12 +359,7 @@ if submit_button:
         else:
             row = result.iloc[0]
             name   = row["이름"]
-            school = row["학교"]
             seat   = row["자리"]
-
-            # 소속 한 줄 안내
-            st.markdown(f'<div class="result-line">🏫 {name} 님의 소속 : {school}</div>',
-                        unsafe_allow_html=True)
 
             # ✅ 좌석은 텍스트로만
             st.markdown(f'<div class="seat-line">💺 배정된 좌석 : <b>{seat}</b></div>',
@@ -384,4 +379,5 @@ if submit_button:
                     st.image(up, use_column_width=True)
                 else:
                     st.info("앱 폴더에 `AI증서수여식 다목적홀 도면도.png`를 추가하거나 위에서 이미지를 업로드하면 전체 좌석표가 표시됩니다.")
+
 
