@@ -31,6 +31,22 @@ div[data-testid="stForm"] {
   background:#132b3a;color:#e6f4ff;border:1px solid #1a3a4e;
   font-size:2.4rem;font-weight:700;
 }
+h4 {
+    margin-top: 0px;
+}
+
+.stButton > button {
+    margin-top: 5px; /* 버튼 간격 조정 */
+}
+
+.seat-label {
+  font-size: 1rem;  /* "배정된 좌석" 텍스트 크기 줄이기 */
+}
+
+.seat-value {
+  font-size: 1.5rem;  /* "TA-1" 크기는 그대로 유지 */
+  font-weight: bold;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -361,7 +377,9 @@ if submit_button:
             name = row["name"]
             seat = row["seat"]
 
-            st.markdown(f'<div class="seat-line">💺 배정된 좌석 : <b>{seat}</b></div>', unsafe_allow_html=True)
+            # 배정된 좌석 텍스트 스타일을 줄여서 출력
+            st.markdown(f'<div class="seat-label">💺 배정된 좌석: </div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="seat-value">{seat}</div>', unsafe_allow_html=True)
 
             # 과정에 따른 이미지 출력
             if course_input == "박사과정":
@@ -370,6 +388,7 @@ if submit_button:
             elif course_input == "석사과정":
                 # 석사과정에 해당하는 이미지
                 st.image("2F_seats.png", caption="석사과정 자리배치")
+
 
 
 
